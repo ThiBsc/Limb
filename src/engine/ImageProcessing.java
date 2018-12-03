@@ -14,7 +14,6 @@ public class ImageProcessing {
 	
 	/**
 	 * https://stackoverflow.com/questions/6524196/java-get-pixel-array-from-image
-	 * https://rosettacode.org/wiki/Fast_Fourier_transform#Java
 	 * @param buffer
 	 */
 	public void FFT(BufferedImage buffer) {
@@ -27,7 +26,7 @@ public class ImageProcessing {
             cinput[i] = new Complex(pixels[i], 0.0);
         }
  
-        FastFourierTransform.fft(cinput);
+        //FastFourierTransform.fft(cinput);
  
         System.out.println("Results:");
         for (Complex c : cinput) {

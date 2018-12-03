@@ -14,7 +14,7 @@ import engine.ImageProcessing;
 public class Testor {
 
 	public static void main(String[] args) {
-		Bot b = new Bot();
+		Bot b = new Bot(null, null);
 		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 		b.moveCursor(screen.width/2, 400);
 		//b.type("I'm LIMB, the Mimetic Bot");
