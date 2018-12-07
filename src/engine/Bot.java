@@ -22,17 +22,17 @@ public class Bot {
 	
 	//private Robot limb;
 	private MouseCorrectRobot limb;
-	private ScreenSelection screenSelection;
-	private JFrame mainWindow;
 	
-	public Bot(JFrame window, ScreenSelection ssel) {
+	public Bot() {
 		try {
 			limb = new MouseCorrectRobot();
-			mainWindow = window;
-			screenSelection = ssel;
 		} catch (AWTException e) {
 			System.err.println("Unable to start LIMB, reason:\n"+e.getMessage());
 		}
+	}
+	
+	public void delay(int ms){
+		limb.delay(ms);
 	}
 	
 	public void moveCursor(int x, int y) {
@@ -57,6 +57,25 @@ public class Bot {
 	public void doRightClick() {
 		limb.mousePress(InputEvent.BUTTON3_DOWN_MASK);
 		limb.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+	}
+	
+	public void down() {
+		limb.keyPress(KeyEvent.VK_DOWN);
+		limb.keyPress(KeyEvent.VK_DOWN);
+	}
+	
+	public void altTab() {
+		limb.keyPress(KeyEvent.VK_ALT);
+		limb.keyPress(KeyEvent.VK_TAB);
+		limb.keyRelease(KeyEvent.VK_TAB);
+		limb.keyRelease(KeyEvent.VK_ALT);
+	}
+	
+	public void ctrlEnd() {
+		limb.keyPress(KeyEvent.VK_CONTROL);
+		limb.keyPress(KeyEvent.VK_END);
+		limb.keyRelease(KeyEvent.VK_END);
+		limb.keyRelease(KeyEvent.VK_CONTROL);
 	}
 	
 	public void selectAll() {
@@ -111,46 +130,48 @@ public class Bot {
 		}
 	}
 	
+	public void execute(Action a){
+		//System.out.println(a.getAction());
+		Rectangle area = a.getArea();
+		Point pos = new Point(area.x+area.width/2, area.y+area.height/2);
+		//System.out.println(pos);
+		if (a.getAction().equals(ActionEnum.LEFT_CLICK.toString())) {
+			moveCursor(pos.x, pos.y);
+			doLeftClick();
+		} else if (a.getAction().equals(ActionEnum.DOUBLE_LEFT_CLICK.toString())) {
+			moveCursor(pos.x, pos.y);
+			doDoubleLeftCLick();
+		} else if (a.getAction().equals(ActionEnum.RIGHT_CLICK.toString())) {
+			moveCursor(pos.x, pos.y);
+			doRightClick();
+		} else if (a.getAction().equals(ActionEnum.SELECT_ALL.toString())) {
+			selectAll();
+		}else if (a.getAction().equals(ActionEnum.COPY.toString())) {
+			copy();
+		} else if (a.getAction().equals(ActionEnum.DOWN.toString())) {
+			down();
+		} else if (a.getAction().equals(ActionEnum.ALT_TAB.toString())) {
+			altTab();
+		} else if (a.getAction().equals(ActionEnum.CTRL_END.toString())) {
+			ctrlEnd();
+		} else if (a.getAction().equals(ActionEnum.PASTE.toString())) {
+			paste();
+		} else if (a.getAction().equals(ActionEnum.COPY_PASTE.toString())) {
+			copyPaste();
+		} else if (a.getAction().equals(ActionEnum.ENTER.toString())) {
+			enter();
+		} else {
+			doLeftClick();
+			limb.delay(50);
+			type(a.getAction());
+			//System.out.println(cur_a.getAction());
+		}
+	}
+	
 	public void execute(Action[] a) {
 		for (Action cur_a : a) {
-			System.out.println(cur_a.getAction());
-			Rectangle area = cur_a.getArea();
-			Point pos = new Point(area.x+area.width/2, area.y+area.height/2);
-			//System.out.println(pos);
-			moveCursor(pos.x, pos.y);
-			if (mainWindow != null) {
-				mainWindow.setState(Frame.ICONIFIED);	
-			}
-			if (cur_a.getAction().equals(ActionEnum.LEFT_CLICK.toString())) {
-				doLeftClick();
-			} else if (cur_a.getAction().equals(ActionEnum.DOUBLE_LEFT_CLICK.toString())) {
-				doDoubleLeftCLick();
-			} else if (cur_a.getAction().equals(ActionEnum.RIGHT_CLICK.toString())) {
-				doRightClick();
-			} else if (cur_a.getAction().equals(ActionEnum.SELECT_ALL.toString())) {
-				selectAll();
-			} else if (cur_a.getAction().equals(ActionEnum.COPY.toString())) {
-				copy();
-			} else if (cur_a.getAction().equals(ActionEnum.PASTE.toString())) {
-				paste();
-			} else if (cur_a.getAction().equals(ActionEnum.COPY_PASTE.toString())) {
-				copyPaste();
-			} else if (cur_a.getAction().equals(ActionEnum.ENTER.toString())) {
-				enter();
-			} else {
-				doLeftClick();
-				limb.delay(100);
-				type(cur_a.getAction());
-				//System.out.println(cur_a.getAction());
-			}
-		}
-		if (screenSelection != null) {
-			limb.delay(500);
-			Rectangle screen_rect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-			screenSelection.setImage(doScreenCapture(screen_rect));
-		}
-		if (mainWindow != null) {
-			mainWindow.setState(Frame.NORMAL);	
+			execute(cur_a);
+			limb.delay(50);
 		}
 	}
 

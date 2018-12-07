@@ -1,8 +1,11 @@
 package gui;
 
+import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
@@ -26,13 +29,21 @@ public class TableAction extends JTable implements MouseListener {
 	}
 	
 	private void executeAction() {
-		int[] rows = getSelectedRows();
-		Action[] actions = new Action[rows.length];
-		int idx = 0;
-		for (int row : rows) {
-			actions[idx++] = ((TableModelAction)getModel()).getAction(row);
+		try {
+			int ans = Integer.parseInt(JOptionPane.showInputDialog("Select n iteration"));
+			int[] rows = getSelectedRows();
+			Action[] actions = new Action[rows.length];
+			int idx = 0;
+			for (int row : rows) {
+				actions[idx++] = ((TableModelAction)getModel()).getAction(row);
+			}
+			for(int i=0; i<ans; i++){
+				limb.execute(actions);
+				limb.delay(250);
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
-		limb.execute(actions);
 	}
 
 	private void deleteAction() {

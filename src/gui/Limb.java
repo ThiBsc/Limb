@@ -30,7 +30,7 @@ public class Limb extends JFrame {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		screenRect = new Rectangle(dim);
 		screenSelection = new ScreenSelection(modelAction);
-		bot = new Bot(this, screenSelection);
+		bot = new Bot();
 		scrollPane = new JScrollPane(screenSelection);
 		screenSelection.setImage(bot.doScreenCapture(screenRect));
 		
