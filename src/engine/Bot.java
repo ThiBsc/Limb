@@ -20,13 +20,14 @@ import gui.ScreenSelection;
  */
 public class Bot {
 	
-	private Robot limb;
+	//private Robot limb;
+	private MouseCorrectRobot limb;
 	private ScreenSelection screenSelection;
 	private JFrame mainWindow;
 	
 	public Bot(JFrame window, ScreenSelection ssel) {
 		try {
-			limb = new Robot();
+			limb = new MouseCorrectRobot();
 			mainWindow = window;
 			screenSelection = ssel;
 		} catch (AWTException e) {
@@ -35,7 +36,7 @@ public class Bot {
 	}
 	
 	public void moveCursor(int x, int y) {
-		limb.mouseMove(x, y);
+		limb.moveMouseControlled(x, y);
 	}
 	
 	public BufferedImage doScreenCapture(Rectangle rect) {
