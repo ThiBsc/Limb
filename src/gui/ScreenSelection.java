@@ -37,6 +37,14 @@ public class ScreenSelection extends JPanel implements KeyListener, MouseListene
 	public void setImage(Image image) {
 		this.image = image;
 		setPreferredSize(new Dimension(image.getWidth(null), image.getHeight(null)));
+		repaint();
+	}
+	
+	public void addAction() {
+		if (selectionPos.getX() != -1 && selectionPos.getY() != -1) {
+			Action a  = new Action(ActionEnum.LEFT_CLICK, selectionPos);
+			modelAction.addAction(a);
+		}
 	}
 
 	@Override
@@ -45,14 +53,7 @@ public class ScreenSelection extends JPanel implements KeyListener, MouseListene
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		if (selectionPos.getX() != -1 && selectionPos.getY() != -1) {
 			g.setColor(Color.red);
-			g.fillOval(selectionPos.x-5, selectionPos.y-5, 10, 10);
-		}
-	}
-	
-	private void addAction() {
-		if (selectionPos.getX() != -1 && selectionPos.getY() != -1) {
-			Action a  = new Action(ActionEnum.LEFT_CLICK, selectionPos);
-			modelAction.addAction(a);
+			g.fillOval(selectionPos.x-6, selectionPos.y-6, 10, 10);
 		}
 	}
 	

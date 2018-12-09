@@ -160,6 +160,7 @@ public class Bot {
 		} else if (a.getAction().equals(ActionEnum.ENTER.toString())) {
 			enter();
 		} else {
+			moveCursor(pos.x, pos.y);
 			doLeftClick();
 			limb.delay(50);
 			type(a.getAction());

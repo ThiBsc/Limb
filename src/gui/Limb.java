@@ -8,17 +8,15 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.JToolBar;
 
 import engine.Bot;
 
 public class Limb extends JFrame {
 	
-	private Rectangle screenRect;
 	private Bot bot;
 	private ScreenSelection screenSelection;
-	private JToolBar toolBar;
+	private ToolBar toolBar;
 	private JSplitPane splitPane;
 	private JScrollPane scrollPane, scrollPaneTable;
 	private TableAction tableAction;
@@ -30,22 +28,21 @@ public class Limb extends JFrame {
 		// Bot
 		bot = new Bot();
 		
-		// ToolBar
-		toolBar = new JToolBar("ToolBar", JToolBar.HORIZONTAL);
-		
 		// Action table
 		modelAction = new TableModelAction();
 		tableAction = new TableAction(bot, modelAction);
 		
 		// Screen selection
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		screenRect = new Rectangle(dim);
 		screenSelection = new ScreenSelection(modelAction);
-		screenSelection.setImage(bot.doScreenCapture(screenRect));
+		screenSelection.setImage(bot.doScreenCapture(new Rectangle(dim)));
 		scrollPane = new JScrollPane(screenSelection);
 		scrollPaneTable = new JScrollPane(tableAction);
 		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, scrollPaneTable);
 		splitPane.setResizeWeight(0.8);
+		
+		// ToolBar
+		toolBar = new ToolBar(bot, screenSelection, JToolBar.HORIZONTAL);
 		
 		add(toolBar, BorderLayout.NORTH);
 		add(splitPane, BorderLayout.CENTER);
