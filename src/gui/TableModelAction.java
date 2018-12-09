@@ -1,9 +1,6 @@
 package gui;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 import javax.swing.table.AbstractTableModel;
 
 import engine.Action;
@@ -32,8 +29,8 @@ public class TableModelAction extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		// Selection image|rect|action
-		return 3;
+		// Selection pos(x,y)|action
+		return 2;
 	}
 
 	@Override
@@ -47,13 +44,9 @@ public class TableModelAction extends AbstractTableModel {
 		Action a = actionList.get(row);
 		switch (col) {
 		case 0:
-			ret = a.getImage();
+			ret = String.format("(%.0f, %.0f)", a.getPos().getX(), a.getPos().getY());
 			break;
 		case 1:
-			Rectangle area = a.getArea();
-			ret = String.format("(%.0f, %.0f)", area.getX(), area.getY());
-			break;
-		case 2:
 			ret = a.getAction();
 			break;
 		default:
@@ -68,12 +61,9 @@ public class TableModelAction extends AbstractTableModel {
 		String ret;
 		switch (column) {
 		case 0:
-			ret = "Area";
-			break;
-		case 1:
 			ret = "Position";
 			break;
-		case 2:
+		case 1:
 			ret = "Action";
 			break;
 		default:
@@ -85,12 +75,12 @@ public class TableModelAction extends AbstractTableModel {
 	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		return (columnIndex==0 ? ImageIcon.class : super.getColumnClass(columnIndex));
+		return super.getColumnClass(columnIndex);
 	}
 	
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return columnIndex == 2;
+		return columnIndex == 1;
 	}
 	
 	@Override

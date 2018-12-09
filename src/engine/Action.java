@@ -1,27 +1,15 @@
 package engine;
 
-import java.awt.Image;
-import java.awt.Rectangle;
-import javax.swing.ImageIcon;
+import java.awt.Point;
 
 public class Action {
 	
-	private ImageIcon image;
 	private String action;
-	private Rectangle area;
+	private Point pos;
 
-	public Action(Image image, ActionEnum action, Rectangle area) {
-		this.image = new ImageIcon(image);
+	public Action(ActionEnum action, Point pos) {
 		this.action = action.toString();
-		this.area = area;
-	}
-
-	public ImageIcon getImage() {
-		return image;
-	}
-
-	public void setImage(Image image) {
-		this.image = new ImageIcon(image);
+		this.pos = pos;
 	}
 
 	public String getAction() {
@@ -32,12 +20,12 @@ public class Action {
 		this.action = action;
 	}
 
-	public Rectangle getArea() {
-		return area;
+	public Point getPos() {
+		return pos;
 	}
 
-	public void setArea(Rectangle area) {
-		this.area = area;
+	public void setPos(Point pos) {
+		this.pos = pos;
 	}
 	
 	

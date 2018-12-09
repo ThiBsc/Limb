@@ -8,10 +8,11 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 
 /**
+ * To work with w10 too
  * https://stackoverflow.com/questions/48799393/robot-mousemove-not-moving-to-specified-location-properly
  */
-public class MouseCorrectRobot extends Robot
-{
+public class MouseCorrectRobot extends Robot {
+	
     final Dimension ScreenSize;// Primary Screen Size
 
     public MouseCorrectRobot() throws AWTException {

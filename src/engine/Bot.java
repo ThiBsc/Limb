@@ -132,8 +132,7 @@ public class Bot {
 	
 	public void execute(Action a){
 		//System.out.println(a.getAction());
-		Rectangle area = a.getArea();
-		Point pos = new Point(area.x+area.width/2, area.y+area.height/2);
+		Point pos = a.getPos();
 		//System.out.println(pos);
 		if (a.getAction().equals(ActionEnum.LEFT_CLICK.toString())) {
 			moveCursor(pos.x, pos.y);

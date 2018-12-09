@@ -20,14 +20,12 @@ import engine.ActionEnum;
 public class ScreenSelection extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 	
 	private Image image;
-	private boolean isInSelection;
-	private Point startSelPoint, endSelPoint;
+	private Point selectionPos;
 	private TableModelAction modelAction;
 	
 	public ScreenSelection(TableModelAction modelAction) {
 		image = null;
-		isInSelection = false;
-		startSelPoint = endSelPoint = null;
+		selectionPos = new Point(-1, -1);
 		this.modelAction = modelAction;
 		addKeyListener(this);
 		setFocusable(true); // For KeyListener
@@ -45,43 +43,15 @@ public class ScreenSelection extends JPanel implements KeyListener, MouseListene
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-		if (isInSelection) {
+		if (selectionPos.getX() != -1 && selectionPos.getY() != -1) {
 			g.setColor(Color.red);
-			if (startSelPoint != null && endSelPoint != null) {
-				int x = Math.min(startSelPoint.x, endSelPoint.x);
-				int y = Math.min(startSelPoint.y, endSelPoint.y);;
-				int width = startSelPoint.x < endSelPoint.x ? endSelPoint.x-startSelPoint.x : startSelPoint.x-endSelPoint.x;
-				int height = startSelPoint.y < endSelPoint.y ? endSelPoint.y-startSelPoint.y : startSelPoint.y-endSelPoint.y;
-				g.drawRect(x, y, width, height);
-			}
+			g.fillOval(selectionPos.x-5, selectionPos.y-5, 10, 10);
 		}
-	}
-	
-	private Image getSelectionImage() {
-		Image selection = null;
-		Rectangle area = getSelectionArea();
-		if (area != null) {
-			selection = ((BufferedImage)image).getSubimage(area.x, area.y, area.width, area.height);
-		}
-		return selection;
-	}
-	
-	private Rectangle getSelectionArea() {
-		Rectangle area = null;
-		if (startSelPoint != null && endSelPoint != null) {
-			int x = Math.min(startSelPoint.x, endSelPoint.x);
-			int y = Math.min(startSelPoint.y, endSelPoint.y);;
-			int width = startSelPoint.x < endSelPoint.x ? endSelPoint.x-startSelPoint.x : startSelPoint.x-endSelPoint.x;
-			int height = startSelPoint.y < endSelPoint.y ? endSelPoint.y-startSelPoint.y : startSelPoint.y-endSelPoint.y;
-			area = new Rectangle(x, y, width, height);
-		}
-		return area;
 	}
 	
 	private void addAction() {
-		Rectangle area = getSelectionArea();
-		if (area != null) {
-			Action a  = new Action(getSelectionImage(), ActionEnum.LEFT_CLICK, area);
+		if (selectionPos.getX() != -1 && selectionPos.getY() != -1) {
+			Action a  = new Action(ActionEnum.LEFT_CLICK, selectionPos);
 			modelAction.addAction(a);
 		}
 	}
@@ -119,27 +89,28 @@ public class ScreenSelection extends JPanel implements KeyListener, MouseListene
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (e.getButton() == MouseEvent.BUTTON1) {
-			isInSelection = true;
-			startSelPoint = e.getPoint();
-			endSelPoint = null;
-			repaint();
+			// Remove the old location
+			Rectangle dirty_rect = new Rectangle((int)selectionPos.getX()-10, (int)selectionPos.getY()-10, 20, 20);
+			repaint(dirty_rect);
+			selectionPos = e.getPoint();
+			// Draw the new location
+			dirty_rect.setLocation((int)selectionPos.getX()-10, (int)selectionPos.getY()-10);
+			repaint(dirty_rect);
 		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON1) {
-			isInSelection = false;
+		if (e.getButton() == MouseEvent.BUTTON3) {
+			Rectangle dirty_rect = new Rectangle((int)selectionPos.getX()-10, (int)selectionPos.getY()-10, 20, 20);
+			repaint(dirty_rect);
+			selectionPos.setLocation(-1, -1);
 		}
 	}
 	
 	/** MouseMotionListener */
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if (isInSelection) {
-			endSelPoint = e.getPoint();
-			repaint();
-		}
 	}
 
 	@Override

@@ -7,7 +7,9 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
+import javax.swing.JToolBar;
 
 import engine.Bot;
 
@@ -16,29 +18,37 @@ public class Limb extends JFrame {
 	private Rectangle screenRect;
 	private Bot bot;
 	private ScreenSelection screenSelection;
-	private JScrollPane scrollPane;
+	private JToolBar toolBar;
+	private JSplitPane splitPane;
+	private JScrollPane scrollPane, scrollPaneTable;
 	private TableAction tableAction;
 	private TableModelAction modelAction;
 	
 	public Limb() {
 		super("Limb Is a Mimetic Bot !");
 
+		// Bot
+		bot = new Bot();
+		
+		// ToolBar
+		toolBar = new JToolBar("ToolBar", JToolBar.HORIZONTAL);
+		
 		// Action table
 		modelAction = new TableModelAction();
+		tableAction = new TableAction(bot, modelAction);
 		
 		// Screen selection
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		screenRect = new Rectangle(dim);
 		screenSelection = new ScreenSelection(modelAction);
-		bot = new Bot();
-		scrollPane = new JScrollPane(screenSelection);
 		screenSelection.setImage(bot.doScreenCapture(screenRect));
+		scrollPane = new JScrollPane(screenSelection);
+		scrollPaneTable = new JScrollPane(tableAction);
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPane, scrollPaneTable);
+		splitPane.setResizeWeight(0.8);
 		
-		// Action model
-		tableAction = new TableAction(bot, modelAction);
-		
-		add(scrollPane, BorderLayout.CENTER);
-		add(tableAction, BorderLayout.EAST);
+		add(toolBar, BorderLayout.NORTH);
+		add(splitPane, BorderLayout.CENTER);
 
 		setSize(700, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
