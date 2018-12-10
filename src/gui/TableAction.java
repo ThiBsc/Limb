@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -12,72 +10,38 @@ import javax.swing.table.TableColumnModel;
 import engine.Action;
 import engine.Bot;
 
-public class TableAction extends JTable implements MouseListener {
+public class TableAction extends JTable {
 	
 	private Bot limb;
 
 	public TableAction(Bot b, TableModelAction model) {
 		super(model);
 		limb = b;
-		addMouseListener(this);
 	}
 
 	public TableAction(Bot b, TableModelAction model, TableColumnModel cmodel) {
 		super(model, cmodel);
 		limb = b;
-		addMouseListener(this);
 	}
 	
-	private void executeAction() {
-		try {
-			int ans = Integer.parseInt(JOptionPane.showInputDialog("Select n iteration"));
-			int[] rows = getSelectedRows();
-			Action[] actions = new Action[rows.length];
-			int idx = 0;
-			for (int row : rows) {
-				actions[idx++] = ((TableModelAction)getModel()).getAction(row);
-			}
-			for(int i=0; i<ans; i++){
-				limb.execute(actions);
-				limb.delay(250);
-			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+	public void executeAction(int niter) {
+		int[] rows = getSelectedRows();
+		Action[] actions = new Action[rows.length];
+		int idx = 0;
+		for (int row : rows) {
+			actions[idx++] = ((TableModelAction)getModel()).getAction(row);
+		}
+		for(int i=0; i<niter; i++){
+			limb.execute(actions);
+			limb.delay(250);
 		}
 	}
 
-	private void deleteAction() {
-		int row = getSelectedRow();
-		if (row != -1) {
-			((TableModelAction)getModel()).deleteAction(row);;
+	public void deleteAction() {
+		int[] rows = getSelectedRows();
+		for (int i=rows.length-1; i>=0; i--) {
+			((TableModelAction)getModel()).deleteAction(rows[i]);
 		}
-	}
-	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		if (e.getButton() == MouseEvent.BUTTON3) {
-			if (e.getClickCount() == 2) {
-				deleteAction();
-			} else {
-				executeAction();
-			}
-		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
 	}
 
 }

@@ -42,7 +42,7 @@ public class Limb extends JFrame {
 		splitPane.setResizeWeight(0.8);
 		
 		// ToolBar
-		toolBar = new ToolBar(bot, screenSelection, JToolBar.HORIZONTAL);
+		toolBar = new ToolBar(bot, screenSelection, tableAction, JToolBar.HORIZONTAL);
 		
 		add(toolBar, BorderLayout.NORTH);
 		add(splitPane, BorderLayout.CENTER);
