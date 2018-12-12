@@ -2,6 +2,9 @@ package engine;
 
 import java.awt.Point;
 
+/**
+ * @author thibdev
+ */
 public class Action {
 	
 	private String action;

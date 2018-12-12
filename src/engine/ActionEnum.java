@@ -1,14 +1,8 @@
 package engine;
 
 /**
- * public void doLeftClick();
- * public void doDoubleLeftCLick();
- * public void doRightClick();
- * public void selectAll();
- * public void copy();
- * public void paste();
- * public void copyPaste();
- * public void type(String text);
+ * @author thibdev
+ * Add a value when you add method in Bot
  */
 public enum ActionEnum {
 	

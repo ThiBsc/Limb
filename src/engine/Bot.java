@@ -1,18 +1,11 @@
 package engine;
 
 import java.awt.AWTException;
-import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-
-import javax.swing.JFrame;
-
-import gui.ScreenSelection;
 
 /**
  * @author thibdev

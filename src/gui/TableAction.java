@@ -1,15 +1,14 @@
 package gui;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
 import engine.Action;
 import engine.Bot;
 
+/**
+ * @author thibdev
+ */
 public class TableAction extends JTable {
 	
 	private Bot limb;

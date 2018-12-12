@@ -16,6 +16,9 @@ import javax.swing.JPanel;
 import engine.Action;
 import engine.ActionEnum;
 
+/**
+ * @author thibdev
+ */
 public class ScreenSelection extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 	
 	private Image image;

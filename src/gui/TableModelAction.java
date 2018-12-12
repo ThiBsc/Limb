@@ -5,6 +5,9 @@ import javax.swing.table.AbstractTableModel;
 
 import engine.Action;
 
+/**
+ * @author thibdev
+ */
 public class TableModelAction extends AbstractTableModel {
 	
 	private ArrayList<Action> actionList;

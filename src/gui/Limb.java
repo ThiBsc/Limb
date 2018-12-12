@@ -12,6 +12,9 @@ import javax.swing.JToolBar;
 
 import engine.Bot;
 
+/**
+ * @author thibdev
+ */
 public class Limb extends JFrame {
 	
 	private Bot bot;
