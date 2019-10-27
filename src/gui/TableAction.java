@@ -32,7 +32,7 @@ public class TableAction extends JTable {
 		}
 		for(int i=0; i<niter; i++){
 			limb.execute(actions);
-			limb.delay(250);
+			limb.delay(Bot.DELAY_ITERATION);
 		}
 	}
 

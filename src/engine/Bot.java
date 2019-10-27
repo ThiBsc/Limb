@@ -5,13 +5,17 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.im.InputContext;
 import java.awt.image.BufferedImage;
+import java.util.Locale;
 
 /**
  * @author thibdev
  * LIMB Is a Mimetic Bot
  */
 public class Bot {
+	
+	public static int DELAY_ITERATION = 250, DELAY_ACTION = 50, DELAY_KEYBOARD = 50;
 	
 	//private Robot limb;
 	private MouseCorrectRobot limb;
@@ -104,12 +108,19 @@ public class Bot {
 	
 	public void type(String text) {
 		for (char c : text.toCharArray()) {
+			limb.delay(DELAY_KEYBOARD);
 			int keyCode = KeyEvent.getExtendedKeyCodeForChar(c);
 			if (keyCode != KeyEvent.CHAR_UNDEFINED) {
 				try {
 					if (Character.isUpperCase(c)) {
 						limb.keyPress(KeyEvent.VK_SHIFT);
 					}
+					// Manage AZERTY keyboard
+					Locale l = InputContext.getInstance().getLocale();
+					if (l.equals(Locale.FRANCE)) {
+						keyCode = mapKeyboardToAzerty(c, keyCode);
+					}
+					
 					limb.keyPress(keyCode);
 					limb.keyRelease(keyCode);
 				} catch (Exception e) {
@@ -121,6 +132,32 @@ public class Bot {
 				}
 			}
 		}
+	}
+	
+	private int mapKeyboardToAzerty(char c, int extendedKeyCode) {
+		int mappedKeycode = extendedKeyCode;
+		/* https://stackoverflow.com/questions/18599939/java-awt-event-keyevent-not-capable-of-fully-mappin-azerty-keyboard */
+		// Manage AZERTY keyboard
+		switch (c) {
+		case 'é':
+			mappedKeycode = 50;
+			break;
+		case 'è':
+			mappedKeycode = 55;
+			break;
+		case 'à':
+			mappedKeycode = 48;
+			break;
+		case '\'':
+			mappedKeycode = 52;
+			break;
+		case '.':
+			mappedKeycode = KeyEvent.VK_DECIMAL;
+			break;
+		default:
+			break;
+		}
+		return mappedKeycode;
 	}
 	
 	public void execute(Action a){
@@ -155,7 +192,7 @@ public class Bot {
 		} else {
 			moveCursor(pos.x, pos.y);
 			doLeftClick();
-			limb.delay(50);
+			limb.delay(DELAY_ACTION);
 			type(a.getAction());
 			//System.out.println(cur_a.getAction());
 		}
@@ -164,7 +201,7 @@ public class Bot {
 	public void execute(Action[] a) {
 		for (Action cur_a : a) {
 			execute(cur_a);
-			limb.delay(50);
+			limb.delay(DELAY_ACTION);
 		}
 	}
 
