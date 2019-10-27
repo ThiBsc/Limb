@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -27,6 +28,8 @@ public class Limb extends JFrame {
 	
 	public Limb() {
 		super("Limb Is a Mimetic Bot !");
+		
+		setIconImage(new ImageIcon(getClass().getResource("/icons/bot.png")).getImage());
 
 		// Bot
 		bot = new Bot();
