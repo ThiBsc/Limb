@@ -24,7 +24,7 @@ To run, just click on the run button and type the number of wanted iteration.
 
 ## Icons
 
-Bot icon made by [Freepik](https://www.freepik.com/) from [Flaticon](www.flaticon.com)    
-Add and Run icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [Flaticon](www.flaticon.com)
-Refresh icon made by [Pixel Buddha](https://www.flaticon.com/authors/pixel-buddha) from [Flaticon](www.flaticon.com)
-Remove icon made by [Pixelmeetup](https://www.flaticon.com/authors/pixelmeetup) from [Flaticon](www.flaticon.com)  
+Bot icon made by [Freepik](https://www.freepik.com/) from [Flaticon](www.flaticon.com)  
+Add and Run icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [Flaticon](www.flaticon.com)  
+Refresh icon made by [Pixel Buddha](https://www.flaticon.com/authors/pixel-buddha) from [Flaticon](www.flaticon.com)  
+Remove icon made by [Pixelmeetup](https://www.flaticon.com/authors/pixelmeetup) from [Flaticon](www.flaticon.com)
