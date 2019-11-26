@@ -12,28 +12,49 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import engine.Action;
 import engine.ActionEnum;
 
 /**
- * @author thibdev
+ * @author thibsc
  */
 public class ScreenSelection extends JPanel implements KeyListener, MouseListener, MouseMotionListener {
 	
 	private Image image;
-	private Point selectionPos;
+	private Point selectionPos, curActionPos;
+	private JTable tableAction;
 	private TableModelAction modelAction;
 	
-	public ScreenSelection(TableModelAction modelAction) {
+	public ScreenSelection(JTable tableAction) {
 		image = null;
 		selectionPos = new Point(-1, -1);
-		this.modelAction = modelAction;
+		curActionPos = new Point(-1, -1);
+		this.tableAction = tableAction;
+		this.modelAction = (TableModelAction) tableAction.getModel();
 		addKeyListener(this);
 		setFocusable(true); // For KeyListener
 		setRequestFocusEnabled(true);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		
+		// To draw a circle at the position of the selected action
+		tableAction.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				try {
+					Action a = modelAction.getAction(tableAction.getSelectedRow());
+					curActionPos = a.getPos();
+				} catch (IndexOutOfBoundsException e) {
+					curActionPos = new Point(-1, -1);
+				} finally {
+					repaint();
+				}
+			}
+	    });
 	}
 	
 	public void setImage(Image image) {
@@ -53,9 +74,15 @@ public class ScreenSelection extends JPanel implements KeyListener, MouseListene
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		// Draw the last mouse click position
 		if (selectionPos.getX() != -1 && selectionPos.getY() != -1) {
 			g.setColor(Color.red);
 			g.fillOval(selectionPos.x-6, selectionPos.y-6, 10, 10);
+		}
+		// Draw the current position of the selected action in the table 
+		if (curActionPos.getX() != -1 && curActionPos.getY() != -1) {
+			g.setColor(Color.green);
+			g.fillOval(curActionPos.x-6, curActionPos.y-6, 10, 10);
 		}
 	}
 	

@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.Locale;
 
 /**
- * @author thibdev
+ * @author thibsc
  * LIMB Is a Mimetic Bot
  */
 public class Bot {

@@ -3,7 +3,7 @@ package engine;
 import java.awt.Point;
 
 /**
- * @author thibdev
+ * @author thibsc
  */
 public class Action {
 	

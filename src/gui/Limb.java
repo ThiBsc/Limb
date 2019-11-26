@@ -14,7 +14,7 @@ import javax.swing.JToolBar;
 import engine.Bot;
 
 /**
- * @author thibdev
+ * @author thibsc
  */
 public class Limb extends JFrame {
 	
@@ -40,7 +40,7 @@ public class Limb extends JFrame {
 		
 		// Screen selection
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		screenSelection = new ScreenSelection(modelAction);
+		screenSelection = new ScreenSelection(tableAction);
 		screenSelection.setImage(bot.doScreenCapture(new Rectangle(dim)));
 		scrollPane = new JScrollPane(screenSelection);
 		scrollPaneTable = new JScrollPane(tableAction);

@@ -21,7 +21,7 @@ import javax.swing.event.ChangeListener;
 import engine.Bot;
 
 /**
- * @author thibdev
+ * @author thibsc
  */
 public class ToolBar extends JToolBar implements ActionListener {
 	

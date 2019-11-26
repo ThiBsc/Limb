@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 import engine.Action;
 
 /**
- * @author thibdev
+ * @author thibsc
  */
 public class TableModelAction extends AbstractTableModel {
 	

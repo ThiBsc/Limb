@@ -7,7 +7,7 @@ import engine.Action;
 import engine.Bot;
 
 /**
- * @author thibdev
+ * @author thibsc
  */
 public class TableAction extends JTable {
 	

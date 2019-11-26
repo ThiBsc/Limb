@@ -1,7 +1,7 @@
 package engine;
 
 /**
- * @author thibdev
+ * @author thibsc
  * Add a value when you add method in Bot
  */
 public enum ActionEnum {
