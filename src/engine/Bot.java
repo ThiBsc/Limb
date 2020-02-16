@@ -139,13 +139,13 @@ public class Bot {
 		/* https://stackoverflow.com/questions/18599939/java-awt-event-keyevent-not-capable-of-fully-mappin-azerty-keyboard */
 		// Manage AZERTY keyboard
 		switch (c) {
-		case 'é':
+		case 'Ã©':
 			mappedKeycode = 50;
 			break;
-		case 'è':
+		case 'Ã¨':
 			mappedKeycode = 55;
 			break;
-		case 'à':
+		case 'Ã ':
 			mappedKeycode = 48;
 			break;
 		case '\'':
